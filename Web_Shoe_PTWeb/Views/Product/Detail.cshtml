@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Detail Product Page";
+}
+@model Web_Shoe_PTWeb.Models.Product
+<div id="templatemo_content">
+
+
+    <div class="content_section">
+
+        <div style="display: flex; flex-direction: row; justify-content:space-between">
+
+            <div class="image-product">
+                <div class="product_box margin_r40">
+                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.product.ImageUrl" alt="product" , height="170px" /></a></div>
+                </div>
+            </div>
+            <div class="product_box">
+
+                <h3>@ViewBag.product.Name</h3>
+                <p>@ViewBag.product.Description</p>
+                <p class="price">Inventory: @ViewBag.product.Quanity</p>
+                <p class="price">Price: $@ViewBag.product.Price.00</p>
+                <p class="price">Promation Price: $@ViewBag.product.PromationPrice.00</p>
+
+
+                <button class="button" style="vertical-align:middle"><span>Buy now </span></button>
+            </div>
+
+
+        </div>
+        
+     
+        <div class="cleaner"></div>
+
+    </div>
+</div>

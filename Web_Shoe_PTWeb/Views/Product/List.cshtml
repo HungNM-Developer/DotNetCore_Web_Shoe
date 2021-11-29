@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Product Page";
+}
+@model List<Web_Shoe_PTWeb.Models.Product>
+<div id="templatemo_content">
+
+    @*<div class="content_section">
+
+        <h2>Welcome to the Shoe Store</h2>
+
+        <p>Free CSS Templates are provided by <a href="#">TemplateMo</a> for everyone. Feel free to download, edit and use this template for your websites. Credit goes to <a href="http://www.vectorvaco.com" target="_blank">Free Vectors</a> for vector graphics used in this layout.</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et quam vitae ipsum vulputate varius vitae semper nunc. Quisque eget elit quis augue pharetra feugiat. <a href="#">Suspendisse</a> turpis arcu, dignissim ac laoreet a, <a href="#">condimentum</a> in massa.</p>
+
+    </div>*@
+
+    <div class="content_section">
+        <h2>New Products</h2>
+
+        @for (int i = 0; i < ViewBag.productList.Count; i++)
+        {
+            if (i % 2 == 0)
+            {
+                //cột id lẻ
+                <div class="product_box margin_r40">
+
+                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.productList[i].ImageUrl" alt="product" , height="170px" /></a></div>
+                    <h3>@ViewBag.productList[i].Name</h3>
+                    <p>@ViewBag.productList[i].Description</p>
+                    <p class="price">Price: $@ViewBag.productList[i].Price</p>
+                    <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a href="#">Buy Now</a>
+
+                </div>
+            }
+            else
+            {
+                //cột id chẵn
+                <div class="product_box">
+
+                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.productList[i].ImageUrl" alt="product" , height="170px" /></a></div>
+                    <h3>@ViewBag.productList[i].Name</h3>
+                    <p>@ViewBag.productList[i].Description</p>
+                    <p class="price">Price: $@ViewBag.productList[i].Price</p>
+                    <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a href="#">Buy Now</a>
+
+                </div>
+            }
+        }
+        <div class="cleaner"></div>
+
+    </div>
+</div>

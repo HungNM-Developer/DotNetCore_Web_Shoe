@@ -1,0 +1,11 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Web_Shoe_PTWeb.Models.Category>;
+<ul class="categories_list">
+    @foreach (var cat in Model)
+    {
+        <li><a asp-controller="product" asp-action="list" asp-route-id="@cat.CategoryId">@cat.Name</a></li>
+    }
+
+</ul>

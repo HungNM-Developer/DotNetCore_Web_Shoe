@@ -26,6 +26,7 @@ namespace Web_Shoe_PTWeb
             services.AddDbContext<Models.Web_Shoe_PTWebContext>(options =>  //WebContext là tên DbContext được tạo ra mặc định tên đặt tùy theo tên DB
            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +40,8 @@ namespace Web_Shoe_PTWeb
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseSession();
+
             app.UseStaticFiles();
 
             app.UseRouting();

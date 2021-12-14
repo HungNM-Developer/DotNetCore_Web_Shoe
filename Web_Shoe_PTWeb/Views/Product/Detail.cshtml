@@ -17,7 +17,7 @@
 
             <div class="image-product">
                 <div class="product_box margin_r40">
-                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.product.ImageUrl" alt="product" , height="170px" /></a></div>
+                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.product.ImageUrl" alt="product" , height="170" /></a></div>
                 </div>
             </div>
             <div class="product_box">
@@ -29,14 +29,43 @@
                 <p class="price">Promation Price: $@ViewBag.product.PromationPrice.00</p>
 
 
-                <button class="button" style="vertical-align:middle"><span>Buy now </span></button>
+                <a asp-controller="ShoppingCart" asp-action="buy" asp-route-id="@ViewBag.product.ProductId" class="button" style="vertical-align:middle">
+                    <span style="color:white">Buy now </span>
+                </a>
             </div>
-
-
         </div>
-        
-     
+
+
         <div class="cleaner"></div>
 
     </div>
 </div>
+@*@section Script{
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(".wcart").click(function () {
+                    var productid = parseFloat($(this).attr("data-productid"));
+                    $.ajax({
+                        url: '/api/ShoppingCart/buy',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: { productid: productid },
+                        success: function (response) {
+                            if (response.result == 'Redirect') {
+                                window.location = response.url;
+                            } else {
+                                loadHeaderCart();// add product success
+                                location.reload();
+                            }
+                            console.log(response);
+                        },
+                        error: function (error) {
+                            alert("There was an error posting the data to the server: " + error.responseText);
+                        }
+                    });
+                });
+            })
+        })
+    </script>
+}*@

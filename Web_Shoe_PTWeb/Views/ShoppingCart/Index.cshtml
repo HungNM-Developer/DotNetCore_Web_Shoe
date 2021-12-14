@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Shopping Carrt Page";
+}
+<div id="templatemo_content">
+
+    @*<div class="content_section">
+
+            <h2>Welcome to the Shoe Store</h2>
+
+            <p>Free CSS Templates are provided by <a href="#">TemplateMo</a> for everyone. Feel free to download, edit and use this template for your websites. Credit goes to <a href="http://www.vectorvaco.com" target="_blank">Free Vectors</a> for vector graphics used in this layout.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et quam vitae ipsum vulputate varius vitae semper nunc. Quisque eget elit quis augue pharetra feugiat. <a href="#">Suspendisse</a> turpis arcu, dignissim ac laoreet a, <a href="#">condimentum</a> in massa.</p>
+
+        </div>*@
+    @model Web_Shoe_PTWeb.Models.CartItem
+    <div class="content_section">
+        <h2>Shopping Cart Page</h2>
+
+        <table id="customers">
+            <thead class="thead-dark">
+                <tr>
+                    @*<th scope="col">#</th>*@
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Promation Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Sub Total</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.cart != null && ViewBag.cart.Count > 0)
+                {
+                    @foreach (var item in (ViewBag.cart as List<CartItem>))
+                    {
+                <tr>
+                    @*<th scope="row">1</th>*@
+                    <td>@item.Product.Name</td>
+                    <td><img src="@item.Product.ImageUrl" width="60" /> </td>
+                    <td>$@item.Product.Price.00</td>
+                    <td>$@item.Product.PromationPrice.00</td>
+                    <td>
+
+                        <input type="number" value="@item.Amount" min="1" max="@item.Product.Quanity">
+                    </td>
+                    <td>$@item.TotalMoney.00</td>
+                    <td><a asp-controller="ShoppingCart" asp-action="Remove" asp-route-id="@item.Product.ProductId">Remove</a></td>
+                    <td><a asp-controller="ShoppingCart" asp-action="UpdateCart" asp-route-id="@item.Product.ProductId">Update</a></td>
+                </tr>
+                    }
+                }
+
+
+            </tbody>
+        </table>
+        <br>
+        <p><span style="font-weight:bold">Total Money:</span>  $@ViewBag.total.00</p>
+
+        <br>
+        <a asp-controller="home" asp-action="index">Continue Shopping</a>
+    </div>
+</div>
+

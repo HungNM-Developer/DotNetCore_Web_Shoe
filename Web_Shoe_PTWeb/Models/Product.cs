@@ -23,5 +23,6 @@ namespace Web_Shoe_PTWeb.Models
 
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
     }
 }

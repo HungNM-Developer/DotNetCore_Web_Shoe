@@ -8,6 +8,7 @@
     <link href="~/templatemo_style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/css/styles.css" />
 
+
     <script language="javascript" type="text/javascript">
         function clearText(field) {
             if (field.defaultValue == field.value) field.value = '';
@@ -37,6 +38,7 @@
 
         });
     </script>
+
     <style>
         #customers {
             font-family: Arial, Helvetica, sans-serif;
@@ -64,6 +66,7 @@
                 background-color: #65d0f2;
                 color: white;
             }
+
         .button {
             display: inline-block;
             border-radius: 4px;
@@ -113,8 +116,9 @@
             <ul>
                 <li><a asp-controller="Home" asp-action="Index" class="current">Home</a></li>
                 @await Component.InvokeAsync("NumberCart")
+                @await Html.PartialAsync("_CartPartial")
                 @*<li><a href="#">Flash</a></li>
-                <li><a href="#">Gallery</a></li>*@
+                    <li><a href="#">Gallery</a></li>*@
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
@@ -268,12 +272,18 @@
         Copyright © 2048 <a href="#">Your Company Name</a> <!-- Credit: www.templatemo.com -->|
         Validate <a href="http://validator.w3.org/check?uri=referer">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
 
-    </div> <!-- end of footer -->
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- end of footer -->
     <!-- templatemo 215 shoe store -->
     <!--
     Shoe Store Template
     http://www.templatemo.com/preview/templatemo_215_shoe_store
-    @await RenderSectionAsync("Scripts", required: false)
+
     -->
+
 </body>
 </html>

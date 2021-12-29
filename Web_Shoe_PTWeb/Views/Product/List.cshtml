@@ -28,15 +28,16 @@
             if (i % 2 == 0)
             {
                 //cột id lẻ
-                <div class="product_box margin_r40">
+    <div class="product_box margin_r40">
 
-                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.productList[i].ImageUrl" alt="product" , height="170px" /></a></div>
-                    <h3>@ViewBag.productList[i].Name</h3>
-                    <p>@ViewBag.productList[i].Description</p>
-                    <p class="price">Price: $@ViewBag.productList[i].Price</p>
-                    <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a href="#">Buy Now</a>
+        <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.productList[i].ImageUrl" alt="product" , height="170px" /></a></div>
+        <h3>@ViewBag.productList[i].Name</h3>
+        <p>@ViewBag.productList[i].Description</p>
+        @*<p>@ViewBag.productList[i].CategoryId</p>*@
+        <p class="price">Price: $@ViewBag.productList[i].Price</p>
+        <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a asp-route="addcart" asp-route-productid="@ViewBag.productList[i].ProductId">Buy Now</a>
 
-                </div>
+    </div>
             }
             else
             {
@@ -47,7 +48,7 @@
                     <h3>@ViewBag.productList[i].Name</h3>
                     <p>@ViewBag.productList[i].Description</p>
                     <p class="price">Price: $@ViewBag.productList[i].Price</p>
-                    <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a href="#">Buy Now</a>
+                    <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a asp-route="addcart" asp-route-productid="@ViewBag.productList[i].ProductId">Buy Now</a>
 
                 </div>
             }

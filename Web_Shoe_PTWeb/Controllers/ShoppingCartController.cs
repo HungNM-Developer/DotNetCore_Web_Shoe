@@ -19,7 +19,7 @@ namespace Web_Shoe_PTWeb.Controllers
             _context = context;
         }
 
-        //[Route("index")]
+        [Route("cart", Name = "Cart")]
         public IActionResult Index()
         {
             var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
@@ -28,8 +28,9 @@ namespace Web_Shoe_PTWeb.Controllers
             return View();
         }
 
-        [Route("buy/{id}")]
-        public IActionResult Buy(int Id)
+        //[HttpPost]
+        //[Route("api/cart/add")]
+        public IActionResult Buy(int Id, int? Amount)
         {
             //Product productModel = new Product();
             try
@@ -57,8 +58,8 @@ namespace Web_Shoe_PTWeb.Controllers
                     }
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
                 }
-                //return RedirectToAction("Index");
-                return Json(new { success = true });
+                return RedirectToAction("Index");
+                //return Json(new { success = true });
             }
             catch
             {
@@ -67,25 +68,37 @@ namespace Web_Shoe_PTWeb.Controllers
 
         }
 
-        public IActionResult UpdateCart(int Id, int? Amount)
+        [HttpPut]
+        //[Route("api/cart/update")]
+        public IActionResult Update(int Id, int Amount)
         {
-            //Product product = _context.Products.SingleOrDefault(p => p.ProductId == Id);
-            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
-            int index = isExist(Id);
-            if (cart != null)
-            {
-                CartItem item = cart.SingleOrDefault(p => p.Product.ProductId == Id);
-                if (item != null && Amount.HasValue)
-                {
-                    item.Amount = Amount.Value;
-                }
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            try {
 
+                List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+                int index = isExist(Id);
+                if (cart != null)
+                {
+                    CartItem item = cart.SingleOrDefault(p => p.Product.ProductId == Id);
+                    if (item != null)
+                    {
+                        item.Amount = Amount;
+                    }
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+
+                }
+                //return RedirectToAction("Index");
+                //return Json(new { success = true });
+                return Ok(Amount);
+            } catch
+            {
+                return BadRequest();
             }
-            return RedirectToAction("Index");
+            
 
         }
-        //[Route("remove/{id}")]
+
+        //[HttpPost]
+        //[Route("api/cart/remove")]
         public IActionResult Remove(int Id)
         {
             try
@@ -94,8 +107,8 @@ namespace Web_Shoe_PTWeb.Controllers
                 int index = isExist(Id);
                 cart.RemoveAt(index);
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                //return RedirectToAction("Index");
-                return Json(new { success = true });
+                return RedirectToAction("Index");
+                //return Json(new { success = true });
             }
             catch
             {

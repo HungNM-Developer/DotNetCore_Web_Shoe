@@ -4,17 +4,21 @@
 @{
     ViewData["Title"] = "Shopping Carrt Page";
 }
+
+@*<script src="~/js/jquery.min.js"></script>*@
+@*<script>
+        $(document).ready(function () {
+
+        });
+    </script>*@
+@using Microsoft.AspNetCore.Identity
+@using Web_Shoe_PTWeb.Areas.Identity.Data
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
 <div id="templatemo_content">
 
-    @*<div class="content_section">
-
-            <h2>Welcome to the Shoe Store</h2>
-
-            <p>Free CSS Templates are provided by <a href="#">TemplateMo</a> for everyone. Feel free to download, edit and use this template for your websites. Credit goes to <a href="http://www.vectorvaco.com" target="_blank">Free Vectors</a> for vector graphics used in this layout.</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et quam vitae ipsum vulputate varius vitae semper nunc. Quisque eget elit quis augue pharetra feugiat. <a href="#">Suspendisse</a> turpis arcu, dignissim ac laoreet a, <a href="#">condimentum</a> in massa.</p>
-
-        </div>*@
     @model Web_Shoe_PTWeb.Models.CartItem
     <div class="content_section">
         <h2>Shopping Cart Page</h2>
@@ -36,22 +40,47 @@
             <tbody>
                 @if (ViewBag.cart != null && ViewBag.cart.Count > 0)
                 {
+                    //int STT = 0;
+
                     @foreach (var item in (ViewBag.cart as List<CartItem>))
                     {
-                <tr>
-                    @*<th scope="row">1</th>*@
-                    <td>@item.Product.Name</td>
-                    <td><img src="@item.Product.ImageUrl" width="60" /> </td>
-                    <td>$@item.Product.Price.00</td>
-                    <td>$@item.Product.PromationPrice.00</td>
-                    <td>
+                        string txt_class = "quantity_" + item.Product.ProductId;
+                        //STT++;
+                        //int total = (int)item.Product.Price * (int)item.Amount;
 
-                        <input type="number" value="@item.Amount" min="1" max="@item.Product.Quanity">
-                    </td>
-                    <td>$@item.TotalMoney.00</td>
-                    <td><a asp-controller="ShoppingCart" asp-action="Remove" asp-route-id="@item.Product.ProductId">Remove</a></td>
-                    <td><a asp-controller="ShoppingCart" asp-action="UpdateCart" asp-route-id="@item.Product.ProductId">Update</a></td>
-                </tr>
+                        <tr>
+                            @*<th scope="row">1</th>*@
+                            <td>@item.Product.Name</td>
+                            <td><img src="@item.Product.ImageUrl" width="60" /> </td>
+                            <td>$@item.Product.Price.00</td>
+                            <td>$@item.Product.PromationPrice.00</td>
+                            <td>
+                                @*<input asp-for="@item.Amount" id="@($"quantity-{item.Product.ProductId}")" />*@
+                                <input type="number" value="@item.Amount" class="@txt_class" min="1" max="@item.Product.Quanity">
+                            </td>
+                            <td>$@item.TotalMoney.00</td>
+                            <td><a asp-controller="ShoppingCart" asp-action="Remove" asp-route-id="@item.Product.ProductId">Remove</a></td>
+                            <td>
+
+
+                                @*<button class="cartItem"
+                                            data-Amount="@item.Amount"
+                                            data-Id="@item.Product.ProductId">
+
+                                        Cập nhật
+                                    </button>*@
+
+                                <a href="" data-Id="@item.Product.ProductId" class="updateCart">Update</a>
+                            </td>
+
+                            @*<td><input type="button"
+                                           value="update"
+                                           class="updateCart"
+                                           data-amount="@item.Amount"
+                                           data-mahh="@item.Product.ProductId"
+                                           data-dongia="@item.Product.PromationPrice" />
+                                </td>*@
+                        </tr>
                     }
                 }
 
@@ -63,6 +92,80 @@
 
         <br>
         <a asp-controller="home" asp-action="index">Continue Shopping</a>
+        <br>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a href="/checkout">Thanh Toán</a>
+        }
+        else
+        {
+            <a href="/User/Login?returnUrl=/checkout">Thanh Toán</a>
+        }
+
     </div>
 </div>
+
+
+
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $(function () {
+                function loadHeaderCart() {
+                    $("#numberCart").load("/AjaxContent/NumberCart");
+                }
+                $(".removecart").click(function () {
+                    var productId = $(this).attr("data-mahh");
+                    $.ajax({
+                        url: "/ShoppingCart/remove",
+                        type: "POST",
+                        data: {
+                            Id: productId
+                        },
+                        success: function (result) {
+                            if (result.success) {
+                                loadHeaderCart();
+                                window.location = 'Index';
+                            }
+                        },
+                        error: function (rs) {
+                            alert("Remove Cart Error!");
+                        },
+                    })
+                })
+                $(".updateCart").click(function () {
+                    //event.preventDefault();
+                    var productId = $(this).attr("data-Id");
+                    var quantity = $(".quantity_" + productId).val();
+
+                    $.ajax({
+                        url: "@Url.Action("Update", "ShoppingCart")",
+                        type: "PUT",
+                        //dataType: "JSON",
+                        data: {
+                            Id: productId,
+                            Amount: quantity
+                        },
+                        success: function (result) {
+                            window.location.href = '@Url.RouteUrl("cart")';
+                            console.log(result);
+                        },
+                        error: function (result) {
+                            console.log(result);
+                            window.location.href = '@Url.RouteUrl("cart")';
+                        },
+
+
+
+                    })
+                });
+
+            });
+
+
+        })
+    </script>
+}
 

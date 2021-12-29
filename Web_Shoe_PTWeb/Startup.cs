@@ -26,7 +26,11 @@ namespace Web_Shoe_PTWeb
             services.AddDbContext<Models.Web_Shoe_PTWebContext>(options =>  //WebContext là tên DbContext được tạo ra mặc định tên đặt tùy theo tên DB
            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-            services.AddSession();
+            services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+            services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+                cfg.Cookie.Name = "xuanthulab";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+                cfg.IdleTimeout = new TimeSpan(0, 30, 0);    // Thời gian tồn tại của Session
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -24,13 +24,25 @@
 
                 <h3>@ViewBag.product.Name</h3>
                 <p>@ViewBag.product.Description</p>
-                <p class="price">Inventory: @ViewBag.product.Quanity</p>
+                <p class="price" id="txtsoLuong">Inventory: @ViewBag.product.Quanity</p>
                 <p class="price">Price: $@ViewBag.product.Price.00</p>
                 <p class="price">Promation Price: $@ViewBag.product.PromationPrice.00</p>
 
+                @*<div >
+                    <a class="addCart button" style="vertical-align:middle" href="javascript:void(0)">
+                        <span style="color:white">Buy now </span>
+                    </a>
+                    <input hidden asp-for="ProductId" />
+                </div>
+                <button class="addCart">add</button>*@
 
-                <a asp-controller="ShoppingCart" asp-action="buy" asp-route-id="@ViewBag.product.ProductId" class="button" style="vertical-align:middle">
+                <a asp-controller="ShoppingCart"
+                   asp-action="buy"
+                   asp-route-id="@ViewBag.product.ProductId"
+                   class="button"
+                   style="vertical-align:middle">
                     <span style="color:white">Buy now </span>
+                    @*<input hidden asp-for="ProductId" />*@
                 </a>
             </div>
         </div>
@@ -40,32 +52,37 @@
 
     </div>
 </div>
-@*@section Script{
+@section Scripts{
     <script>
         $(document).ready(function () {
             $(function () {
-                $(".wcart").click(function () {
-                    var productid = parseFloat($(this).attr("data-productid"));
+                $(".addCart").click(function () {
+                    var productid = $('#ProductId').val();
+                    var soLuong = $('#txtsoLuong').val();
                     $.ajax({
-                        url: '/api/ShoppingCart/buy',
+                        url: "/api/cart/add",
                         type: "POST",
                         dataType: "JSON",
-                        data: { productid: productid },
+                        data: {
+                            Id: productid,
+                            Amount: soLuong
+                        },
                         success: function (response) {
-                            if (response.result == 'Redirect') {
-                                window.location = response.url;
-                            } else {
-                                loadHeaderCart();// add product success
-                                location.reload();
-                            }
-                            console.log(response);
+                            //loadHeaderCart();// add product success
+                            location.reload();
+                            alert("success");
                         },
                         error: function (error) {
                             alert("There was an error posting the data to the server: " + error.responseText);
                         }
                     });
                 });
-            })
+            });
+
+            function loadHeaderCart() {
+                //$("#miniCart").load("/AjaxContent/HeaderCart");
+                $("#ShoppingCart").load("/AjaxContent/NumberCart");
+            }
         })
     </script>
-}*@
+}

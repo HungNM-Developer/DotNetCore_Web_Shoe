@@ -1,13 +1,20 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Identity
+@using Web_Shoe_PTWeb.Areas.Identity.Data
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
 @model List<Web_Shoe_PTWeb.Models.CartItem>
-@if (Model != null && Model.Count() > 0)
+@if (Model != null && Model.Count() > 0 )
 {
 
-    <li><a href="cart" >Cart(@Model.Count())</a></li>
+    <li><a href="cart"><i class="fas fa-shopping-cart"></i>(@Model.Count())</a></li>
+
 }
 else
 {
-    <li><a href="">Cart(0)</a></li>
+    @*<li><a href="cart"><i class="fas fa-shopping-cart"></i></a></li>*@
 }

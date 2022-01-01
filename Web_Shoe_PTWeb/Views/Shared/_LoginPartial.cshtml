@@ -4,25 +4,45 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @UserManager.GetUserName(User)!</a>
-        </li>
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-action="Register" asp-controller="User">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-action="Login" asp-controller="User">Login</a>
-        </li>
-    }
-</ul>
+
+@if (SignInManager.IsSignedIn(User))
+{
+<div style="display: flex; flex-direction:column; align-items:center; justify-content: center">
+
+    <div style="display:flex; justify-content:space-between; align-items:center">
+        <i class="fas fa-user-circle fa-2x"></i>
+        &nbsp;&nbsp;
+        <a id="manage" class="nav-link text-dark"
+           style="color:black; font-size:16px;"
+           asp-area="Identity"
+           asp-page="/Account/Manage/Index"
+           title="Manage">Welcome back!, @UserManager.GetUserName(User)</a>
+    </div>
+    
+    <br />
+    <a class="button" style="color:white; font-size:14px;"
+       asp-controller="Order"
+       asp-action="List"><span>View List Order</span></a>
+    <br />
+    <form id="logoutForm" class="form-inline"
+          asp-area="Identity"
+          asp-page="/Account/Logout"
+          asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+    </form>
+</div>
+
+}
+else
+{
+    <div style="display:flex; justify-content:space-evenly; align-items:center">
+        <a class="nav-link text-dark" id="register" style="font-size:15px;" asp-action="Register" asp-controller="User">Register</a>
+
+        <p style="font-size:15px;">|</p>
+
+        <a class="nav-link text-dark" id="login" style="font-size:15px;" asp-action="Login" asp-controller="User">Login</a>
+    </div>
+
+
+}
+

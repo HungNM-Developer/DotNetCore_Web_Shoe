@@ -88,19 +88,22 @@
             </tbody>
         </table>
         <br>
-        <p><span style="font-weight:bold">Total Money:</span>  $@ViewBag.total.00</p>
+        <p style="font-size: 15px"><span style="font-weight:bold; font-size:15px">Total Money:</span>  $@ViewBag.total.00</p>
 
         <br>
-        <a asp-controller="home" asp-action="index">Continue Shopping</a>
-        <br>
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <a href="/checkout">Thanh Toán</a>
-        }
-        else
-        {
-            <a href="/User/Login?returnUrl=/checkout">Thanh Toán</a>
-        }
+        <div style="display: flex; justify-content: space-between">
+            <a style="color:white" class="buttonBackShopping" asp-controller="home" asp-action="index"><span>Continue Shopping</span></a>
+            <br>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a style="color:white" class="button" href="/checkout"><span>Checkout</span></a>
+            }
+            else
+            {
+                <a style="color:white" class="button" href="/User/Login?returnUrl=/checkout"><span>Checkout</span></a>
+            }
+        </div>
+       
 
     </div>
 </div>

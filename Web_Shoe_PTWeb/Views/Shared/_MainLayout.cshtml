@@ -7,8 +7,9 @@
     <meta name="description" content="" />
     <link href="~/templatemo_style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-
+    <script src="https://kit.fontawesome.com/1faf373d4a.js" crossorigin="anonymous"></script>
     <script language="javascript" type="text/javascript">
         function clearText(field) {
             if (field.defaultValue == field.value) field.value = '';
@@ -70,7 +71,7 @@
         .button {
             display: inline-block;
             border-radius: 4px;
-            background-color: #f4511e;
+            background-color: #65d0f2;
             border: none;
             color: #FFFFFF;
             text-align: center;
@@ -106,23 +107,100 @@
                     opacity: 1;
                     right: 0;
                 }
+
+
+
+
+        .buttonBackShopping {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #65d0f2;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 15px;
+            padding: 10px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+            .buttonBackShopping span {
+                cursor: pointer;
+                display: inline-block;
+                position: relative;
+                transition: 0.5s;
+            }
+
+                .buttonBackShopping span::after {
+                    content: '\00ab';
+                    position: absolute;
+                    opacity: 0;
+                    top: 0;
+                    left: -20px;
+                    transition: 0.5s;
+                }
+
+            .buttonBackShopping:hover span {
+                padding-left: 25px;
+            }
+
+                .buttonBackShopping:hover span:after {
+                    opacity: 1;
+                    left: 0;
+                }
+
+
+
+        .myButton {
+            box-shadow: 3px 4px 0px 0px #1564ad;
+            background: linear-gradient(to bottom, #65d0f2 5%, #378de5 100%);
+            background-color: #65d0f2;
+            border-radius: 5px;
+            border: 1px solid #337bc4;
+            display: inline-block;
+            cursor: pointer;
+            color: white;
+            font-family: Arial;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 12px 34px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #fff;
+        }
+
+            .myButton:hover {
+                background: linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+                background-color: #378de5;
+            }
+
+            .myButton:active {
+                position: relative;
+                top: 1px;
+            }
     </style>
 </head>
 <body>
+
     <div id="templatemo_menu_wrapper">
 
         <div id="templatemo_menu">
 
             <ul>
                 <li><a asp-controller="Home" asp-action="Index" class="current">Home</a></li>
-                @await Component.InvokeAsync("NumberCart")
-                @await Html.PartialAsync("_CartPartial")
-                @*<li><a href="#">Flash</a></li>
-                    <li><a href="#">Gallery</a></li>*@
+                @*@await Html.PartialAsync("_CartPartial")*@
+                <li><a href="#">CSS</a></li>
+                <li><a href="#">Flash</a></li>
+                <li><a href="#">Gallery</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
+                @await Component.InvokeAsync("NumberCart")
+
+
+
             </ul>
-            <partial name="_LoginPartial" />
+
         </div> <!-- end of templatemo_menu -->
 
     </div> <!-- end of templatemo_menu_wrapper -->
@@ -213,10 +291,16 @@
 
     <div id="templatemo_content_wrapper">
         <div id="templatmeo_sidebar">
+            <div class="sidebar_section">
+                <div class="sidebar_section_content">
+                    <partial name="_LoginPartial" />
+                </div>
 
+            </div>
             <div class="sidebar_section">
                 <h2>Search Any Item</h2>
                 <div class="sidebar_section_content">
+
 
                     <form action="#" method="get">
                         <input type="text" value="Enter a keyword..." name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
@@ -253,10 +337,6 @@
 
     </div> <!-- end of templatemo_content_wrapper -->
     <div id="templatemo_content_wrapper_bottom"></div>
-
-
-
-
 
 
     <div id="templatemo_footer">

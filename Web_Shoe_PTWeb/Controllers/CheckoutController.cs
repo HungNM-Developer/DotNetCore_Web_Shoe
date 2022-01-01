@@ -21,30 +21,27 @@ namespace Web_Shoe_PTWeb.Controllers
             _userManager = userManager;
         }
 
+        //HttpGet
         [Route("checkout", Name = "Checkout")]
-        public async Task<IActionResult> Index(CheckoutModel model, string returnUrl = null)
+        public async Task<IActionResult> Index(Order order)
         {
             //returnUrl ??= Url.Content("~/");
-            var taikhoanID = HttpContext.Session.GetString("CustomerId");
-            //var khachhang = new AspNetUser();
-            //var userId = _userManager.GetUserId(user);
             var khachhang = await _userManager.GetUserAsync(HttpContext.User);
             var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
-            //var khachhang = _context.AspNetUsers.SingleOrDefault(kh => kh.Id == HttpContext.User.);
-            //var khachhang = _context.AspNetUsers.Where(x => x.Id == model.UserId);
-            //AspNetUser uid = new AspNetUser();
-            //HttpContext.Session.SetString("UserId", uid.Id);
-            //if(checkoutID != null)
+            CheckoutModel modelCheckout = new CheckoutModel();
 
-            model.UserId = khachhang.Id;
-            model.FirstName = khachhang.FirstName;
-            model.LastName = khachhang.LastName;
-            model.PhoneNumber = khachhang.PhoneNumber;
-            //model.ShipAdress =khachhang.;
+            modelCheckout.UserId = khachhang.Id;
+            modelCheckout.FirstName = khachhang.FirstName;
+            modelCheckout.LastName = khachhang.LastName;
+
+            var user = _context.AspNetUsers.SingleOrDefault(x => x.Id == khachhang.Id);
+            modelCheckout.PhoneNumber = user.PhoneNumber;
+
+            modelCheckout.ShipAdress = order.ShipAdress;
 
             ViewBag.cart = cart;
             ViewBag.total = cart.Sum(item => item.Product.PromationPrice * item.Amount);
-            return View(model);
+            return View(modelCheckout);
 
         }
 
@@ -55,25 +52,27 @@ namespace Web_Shoe_PTWeb.Controllers
             var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
             var khachhang = await _userManager.GetUserAsync(HttpContext.User);
 
-            CheckoutModel model = new CheckoutModel();
+            CheckoutModel modelCheckout = new CheckoutModel();
 
+
+            modelCheckout.UserId = khachhang.Id;
+            modelCheckout.FirstName = khachhang.FirstName;
+            modelCheckout.LastName = khachhang.LastName;
+            modelCheckout.PhoneNumber = khachhang.PhoneNumber;
+            modelCheckout.ShipAdress = checkout.ShipAdress;
+            var user = _context.AspNetUsers.SingleOrDefault(x => x.Id == khachhang.Id);
+            user.PhoneNumber = checkout.PhoneNumber;
             
-            model.UserId = khachhang.Id;
-            model.FirstName = khachhang.FirstName;
-            model.LastName = khachhang.LastName;
-            model.PhoneNumber = khachhang.PhoneNumber;
-            model.ShipAdress = checkout.ShipAdress;
-            
-            //_context.Update(khachhang);
+            _context.AspNetUsers.Update(user);
             _context.SaveChanges();
-            //}
+       
             try {
                 if (ModelState.IsValid)
                 {
                     Order donhang = new Order();
-                    donhang.UserId = model.UserId;
-                    donhang.ShipAdress = model.ShipAdress;
-                    donhang.Status = "";
+                    donhang.UserId = modelCheckout.UserId;
+                    donhang.ShipAdress = modelCheckout.ShipAdress;
+                    donhang.Status = "Processing";
                     donhang.OrderDate = DateTime.Now;
                     donhang.Total = Convert.ToDouble(cart.Sum(x => x.TotalMoney));
                     _context.Add(donhang);
@@ -91,19 +90,18 @@ namespace Web_Shoe_PTWeb.Controllers
                     _context.SaveChanges();
 
                     HttpContext.Session.Remove("cart");
-
                     ViewBag.cart = cart;
                     return RedirectToAction("Success");
                 }
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                ViewBag.cart = cart;
+                //ViewBag.cart = cart;
                 //ViewBag.donhang = donhang;
-                return View(model);
+                return View(modelCheckout);
             }
-            
-            return View(model);
+            ViewBag.cart = cart;
+            return View(modelCheckout);
 
 
         }

@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    List<Web_Shoe_PTWeb.Models.Order> orders = ViewBag.orderList;
+}
+@model List<Web_Shoe_PTWeb.Models.Order>
+
+<div id="templatemo_content">
+
+    <div class="content_section">
+        <h2>List Order</h2>
+
+        <table id="customers">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Ship Adress</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (orders != null && orders.Count > 0)
+                {
+                    int STT = 0;
+
+                    @foreach (var item in orders)
+                    {
+                        STT++;
+                        <tr>
+                            <td>@STT</td>
+                            <td>@item.ShipAdress</td>
+                            <td>@item.Status</td>
+                            <td>$@item.Total.00</td>
+                            <td>@item.OrderDate</td>
+                            <td><a asp-controller="Order" asp-action="Detail" asp-route-id="@item.OrderId">View Detail Order</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -301,8 +301,7 @@
                 <h2>Search Any Item</h2>
                 <div class="sidebar_section_content">
 
-
-                    <form action="#" method="get">
+                    <form asp-action="Search" asp-controller="Home" method="get">
                         <input type="text" value="Enter a keyword..." name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
                         <input type="submit" name="Search" value="Search" alt="Search" id="searchbutton" title="Search" />
                     </form>
@@ -318,14 +317,6 @@
 
                 <div class="sidebar_section_content">
                     <vc:category-list></vc:category-list>
-                    @*@model List<Web_Shoe_PTWeb.Models.Category>;
-                        <ul class="categories_list">
-                            @foreach (var cat in ViewBag.catList as List<Category>)
-                            {
-                                <li><a asp-controller="product" asp-action="list" asp-route-id="@cat.Id">@cat.Name</a></li>
-                            }
-
-                        </ul>*@
                 </div>
 
             </div>

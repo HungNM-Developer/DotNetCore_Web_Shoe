@@ -37,8 +37,7 @@
                     </div>
                     <h3>@ViewBag.productList[i].Name</h3>
                     <p>@ViewBag.productList[i].Description</p>
-                    @*<p>@ViewBag.productList[i].CategoryId</p>*@
-                    <p class="price">Price: $@ViewBag.productList[i].Price</p>
+                    <p class="price">Price: $@ViewBag.productList[i].Price.00</p>
                     <a asp-controller="product" asp-action="detail"
                        asp-route-id="@ViewBag.productList[i].ProductId">Detail</a>
                     |
@@ -60,7 +59,7 @@
                     </div>
                     <h3>@ViewBag.productList[i].Name</h3>
                     <p>@ViewBag.productList[i].Description</p>
-                    <p class="price">Price: $@ViewBag.productList[i].Price</p>
+                    <p class="price">Price: $@ViewBag.productList[i].Price.00</p>
                     <a asp-controller="product"
                        asp-action="detail"
                        asp-route-id="@ViewBag.productList[i].ProductId">Detail</a>

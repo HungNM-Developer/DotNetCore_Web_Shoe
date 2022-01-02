@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,6 @@ namespace Web_Shoe_PTWeb.Controllers
 
         public IActionResult Index()
         {
-            //var catList = _context.Categories.ToList();
-            //ViewBag.catList = catList;
             var productList = _context.Products.ToList().GetRange(5, 4);
             ViewBag.productList = productList;
             return View();
@@ -31,15 +30,16 @@ namespace Web_Shoe_PTWeb.Controllers
 
         public IActionResult Privacy()
         {
-            //var catList = _context.Categories.ToList();
-            //ViewBag.catList = catList;
             return View();
         }
 
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
+
+        public IActionResult Search(string q)
+        {
+            List<Product> productList = _context.Products.Where(p => p.Name.Contains(q)).ToList();
+            ViewBag.productList = productList;
+            return View("Index");
+        }
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,16 +50,16 @@ namespace Web_Shoe_PTWeb.Controllers
                 {
                     return NotFound();
                 }
-                var donhang = _context.Orders.FirstOrDefault(x => x.OrderId == id && x.UserId == khachhang.Id);
+                var donhang = _context.Orders.Include(x => x.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).FirstOrDefault(x => x.OrderId == id && x.UserId == khachhang.Id);
                 if(donhang == null)
                 {
                     return NotFound();
                 }
-                var chitietdonhang = _context.OrderDetails.Where(x => x.OrderId == id).OrderBy(x => x.OrderDetailId).ToList();
+                //var chitietdonhang = _context.OrderDetails.Where(x => x.OrderId == id).OrderBy(x => x.OrderDetailId).ToList();
 
                 ViewBag.donhang = donhang;
-                ViewBag.chitietdonhang = chitietdonhang;
-                return View();
+                //ViewBag.chitietdonhang = chitietdonhang;
+                return View(donhang);
             
             } catch {
                 return NotFound();

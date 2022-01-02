@@ -2,37 +2,54 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Web_Shoe_PTWeb.Models.OrderDetail orderDetails = ViewBag.chitietdonhang;
+    //Web_Shoe_PTWeb.Models.OrderDetail orderDetails = ViewBag.chitietdonhang;
 }
-@model Web_Shoe_PTWeb.Models.OrderDetail
+@model Web_Shoe_PTWeb.Models.Order
 
 <div id="templatemo_content">
     <div class="content_section">
-        <h2>Order Detail @ViewBag.donhang.Id</h2>
+        <h2>Order Detail </h2>
+        <h3>ID: #@Model.OrderId</h3>
+
+        <p style="font-size:14px; font-weight:500">Order Date: @Model.OrderDate</p>
+
+        <p style="font-size:14px; font-weight:500">Ship Adress: @Model.ShipAdress</p>
+
+        <p style="font-size:14px; font-weight:500">Status: @Model.Status</p>
 
         <table id="customers">
             <thead class="thead-dark">
                 <tr>
-                    @*<th scope="col">#</th>*@
-                    <th scope="col">Product</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
-
+                    <th scope="col">Promation Price</th>
                     @*<th scope="col"></th>*@
                 </tr>
             </thead>
             <tbody>
-
-                <tr>
-                    
-                    <td>@orderDetails.Product</td>
-                    <td>@orderDetails.Quantity</td>
-                    <td>$@orderDetails.Price.00</td>
-                   
-                    @*<td><a asp-controller="Order" asp-action="Detail" asp-route-id="@item.OrderId">View Detail Order</a></td>*@
-                </tr>
+                @if (ViewBag.donhang != null && ViewBag.donhang.OrderDetails.Count > 0)
+                {
+                    int STT = 0;
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        STT++;
+                        <tr>
+                            <td>@STT</td>
+                            <td>@item.Product.Name</td>
+                            <td><img src="~/@item.Product.ImageUrl" width="60" /> </td>
+                            <td>@item.Quantity</td>
+                            <td>$@item.Price.00</td>
+                            <td>$@item.Product.PromationPrice.00</td>
+                        </tr>
+                    }
+                }
 
             </tbody>
         </table>
+        <br />
+        <p style="font-size:15px; font-weight:700">Total Money: $@Model.Total.00</p>
     </div>
 </div>

@@ -13,10 +13,9 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et quam vitae ipsum vulputate varius vitae semper nunc. Quisque eget elit quis augue pharetra feugiat. <a href="#">Suspendisse</a> turpis arcu, dignissim ac laoreet a, <a href="#">condimentum</a> in massa.</p>
 
     </div>
-    @model List<Web_Shoe_PTWeb.Models.Product>;
+    @*@model List<Web_Shoe_PTWeb.Models.Product>;*@
     <div class="content_section">
         <h2>New Products</h2>
-        @*@for (int i = ViewBag.productList.Count - 1; i >= ViewBag.productList.Count - 4; i--)*@
         @for (int i = 0; i < ViewBag.productList.Count; i++)
         {
             if (i % 2 == 0)
@@ -24,10 +23,10 @@
                 //cột id lẻ
                 <div class="product_box margin_r40">
 
-                    <div class="image_wrapper"><a href="#"><img src="@ViewBag.productList[i].ImageUrl" alt="product" , height="170" /></a></div>
+                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.productList[i].ImageUrl" alt="product" , height="170" /></a></div>
                     <h3>@ViewBag.productList[i].Name</h3>
                     <p>@ViewBag.productList[i].Description</p>
-                    <p class="price">Price: $@ViewBag.productList[i].Price</p>
+                    <p class="price">Price: $@ViewBag.productList[i].Price.00</p>
                     <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a asp-controller="ShoppingCart"
                    asp-action="buy"
                    asp-route-id="@ViewBag.productList[i].ProductId">Buy Now</a>
@@ -41,10 +40,10 @@
                 //cột id chẵn
                 <div class="product_box">
 
-                    <div class="image_wrapper"><a href="#"><img src="@ViewBag.productList[i].ImageUrl" alt="product" , height="170" /></a></div>
+                    <div class="image_wrapper"><a href="#"><img src="~/@ViewBag.productList[i].ImageUrl" alt="product" , height="170" /></a></div>
                     <h3>@ViewBag.productList[i].Name</h3>
                     <p>@ViewBag.productList[i].Description</p>
-                    <p class="price">Price: $@ViewBag.productList[i].Price</p>
+                    <p class="price">Price: $@ViewBag.productList[i].Price.00</p>
                     <a asp-controller="product" asp-action="detail" asp-route-id="@ViewBag.productList[i].ProductId">Detail</a> | <a asp-controller="ShoppingCart"
                    asp-action="buy"
                    asp-route-id="@ViewBag.productList[i].ProductId">Buy Now</a>

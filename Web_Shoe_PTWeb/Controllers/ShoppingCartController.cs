@@ -19,7 +19,7 @@ namespace Web_Shoe_PTWeb.Controllers
             _context = context;
         }
 
-        [Route("cart", Name = "Cart")]
+        //[Route("cart", Name = "Cart")]
         public IActionResult Index()
         {
             var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
@@ -84,9 +84,9 @@ namespace Web_Shoe_PTWeb.Controllers
                         item.Amount = Amount;
                     }
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-
+                    return View();
                 }
-                //return RedirectToAction("Index");
+                //return View();
                 //return Json(new { success = true });
                 return Ok(Amount);
             } catch

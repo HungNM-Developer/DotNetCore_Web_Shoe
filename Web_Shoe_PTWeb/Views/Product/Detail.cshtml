@@ -28,21 +28,12 @@
                 <p class="price">Price: $@ViewBag.product.Price.00</p>
                 <p class="price">Promation Price: $@ViewBag.product.PromationPrice.00</p>
 
-                @*<div >
-                    <a class="addCart button" style="vertical-align:middle" href="javascript:void(0)">
-                        <span style="color:white">Buy now </span>
-                    </a>
-                    <input hidden asp-for="ProductId" />
-                </div>
-                <button class="addCart">add</button>*@
-
                 <a asp-controller="ShoppingCart"
                    asp-action="buy"
                    asp-route-id="@ViewBag.product.ProductId"
                    class="button"
                    style="vertical-align:middle">
                     <span style="color:white">Buy now </span>
-                    @*<input hidden asp-for="ProductId" />*@
                 </a>
             </div>
         </div>

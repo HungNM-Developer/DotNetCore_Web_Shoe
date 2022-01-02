@@ -4,13 +4,6 @@
 @{
     ViewData["Title"] = "Shopping Carrt Page";
 }
-
-@*<script src="~/js/jquery.min.js"></script>*@
-@*<script>
-        $(document).ready(function () {
-
-        });
-    </script>*@
 @using Microsoft.AspNetCore.Identity
 @using Web_Shoe_PTWeb.Areas.Identity.Data
 
@@ -40,46 +33,23 @@
             <tbody>
                 @if (ViewBag.cart != null && ViewBag.cart.Count > 0)
                 {
-                    //int STT = 0;
-
                     @foreach (var item in (ViewBag.cart as List<CartItem>))
                     {
                         string txt_class = "quantity_" + item.Product.ProductId;
-                        //STT++;
-                        //int total = (int)item.Product.Price * (int)item.Amount;
 
                         <tr>
-                            @*<th scope="row">1</th>*@
                             <td>@item.Product.Name</td>
                             <td><img src="@item.Product.ImageUrl" width="60" /> </td>
                             <td>$@item.Product.Price.00</td>
                             <td>$@item.Product.PromationPrice.00</td>
                             <td>
-                                @*<input asp-for="@item.Amount" id="@($"quantity-{item.Product.ProductId}")" />*@
                                 <input type="number" value="@item.Amount" class="@txt_class" min="1" max="@item.Product.Quanity">
                             </td>
                             <td>$@item.TotalMoney.00</td>
                             <td><a asp-controller="ShoppingCart" asp-action="Remove" asp-route-id="@item.Product.ProductId">Remove</a></td>
                             <td>
-
-
-                                @*<button class="cartItem"
-                                            data-Amount="@item.Amount"
-                                            data-Id="@item.Product.ProductId">
-
-                                        Cập nhật
-                                    </button>*@
-
                                 <a href="" data-Id="@item.Product.ProductId" class="updateCart">Update</a>
                             </td>
-
-                            @*<td><input type="button"
-                                           value="update"
-                                           class="updateCart"
-                                           data-amount="@item.Amount"
-                                           data-mahh="@item.Product.ProductId"
-                                           data-dongia="@item.Product.PromationPrice" />
-                                </td>*@
                         </tr>
                     }
                 }
@@ -138,20 +108,21 @@
                         },
                     })
                 })
-                $(".updateCart").click(function () {
-                    //event.preventDefault();
+                $(".updateCart").click(function (event) {
+                    event.preventDefault();
                     var productId = $(this).attr("data-Id");
                     var quantity = $(".quantity_" + productId).val();
-
                     $.ajax({
                         url: "@Url.Action("Update", "ShoppingCart")",
                         type: "PUT",
-                        //dataType: "JSON",
+                        dataType: "JSON",
                         data: {
                             Id: productId,
                             Amount: quantity
                         },
                         success: function (result) {
+                            //window.location = 'Index';
+                            //location.reload();
                             window.location.href = '@Url.RouteUrl("cart")';
                             console.log(result);
                         },
